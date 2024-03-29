@@ -57,9 +57,12 @@ class HSIncoming(Resource):
         db.connect()
         out = db.query(Query.HUFFMODELIN, top)[0][0]
         db.close()
-        results = CoordinateTransformer.transform_coordinates(out)
-        # Return
-        return results
+
+        # Instantiate CoordinateTransformer
+        transformer = CoordinateTransformer()
+        
+        # Call transform_coordinates method
+        results = transformer.transform_coordinates(out)
 
 @huff_model_ns.route(
     "/outgoing/<top>",

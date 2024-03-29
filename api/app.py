@@ -4,8 +4,6 @@
 import os
 from flask import Flask
 from flask_restx import Api, Namespace, Resource
-from flask import jsonify
-import pyproj
 
 from db import Database, Query
 

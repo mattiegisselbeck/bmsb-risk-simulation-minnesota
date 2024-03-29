@@ -2,13 +2,18 @@
 """RESTful API for accessing BMSB Simulation Results"""
 
 import os
+
 from flask import Flask
 from flask_restx import Api, Namespace, Resource
+
 from db import Database, Query
 
+__author__ = "Luke Zaruba"
+__credits__ = ["Luke Zaruba", "Mattie Gisselbeck"]
 __status__ = "Production"
 
-
+# Set up DB Connection
+db = Database.initialize_from_env()
 
 # Configure API
 app = Flask(__name__)
@@ -48,7 +53,9 @@ api.add_namespace(gravity_model_ns)
 class HSIncoming(Resource):
     def get(self, top):
         # Query
-        out = Database.query(Query.HUFFMODELIN, top)
+        db.connect()
+        out = db.query(Query.SIMPLE_HUFF_IN, top)[0][0]
+        db.close()
 
         # Return
         return out
@@ -60,8 +67,9 @@ class HSIncoming(Resource):
 class HSOutgoing(Resource):
     def get(self, top):
         # Query
-        Database.query()
-        out = Database.query(Query.HUFFMODELOUT, top)[0][0]
+        db.connect()
+        out = db.query(Query.SIMPLE_HUFF_OUT, top)[0][0]
+        db.close()
 
         # Return
         return out

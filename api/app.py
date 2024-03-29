@@ -4,6 +4,8 @@
 import os
 from flask import Flask
 from flask_restx import Api, Namespace, Resource
+from flask import jsonify
+import pyproj
 
 from db import Database, Query
 
@@ -56,8 +58,19 @@ class HSIncoming(Resource):
         out = db.query(Query.HUFFMODELIN, top)[0][0]
         db.close()
 
+        # Perform Coordinate Transformation
+        current_crs = pyproj.CRS.from_epsg(32615)  # UTM Zone 15N
+        target_crs = pyproj.CRS.from_epsg(4326)  # WGS84
+        transformer = pyproj.Transformer.from_crs(current_crs, target_crs, always_xy=True)
+
+        # Convert Coordinates in each feature to WGS84
+        for feature in out['features']:
+            coords = feature['geometry']['coordinates']
+            transformed_coords = transformer.transform(coords[0], coords[1])
+            feature['geometry']['coordinates'] = [transformed_coords[0], transformed_coords[1]]
+
         # Return
-        return out
+        return jsonify(out)
 
 @huff_model_ns.route(
     "/outgoing/<top>",

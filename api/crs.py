@@ -13,13 +13,13 @@ class CoordinateTransformer:
             self.current_crs, self.target_crs, always_xy=True
         )
 
-    def transform_coordinates(self, results):
+    def transform_coordinates(self, out):
         # Convert Coordinates in Each Feature to WGS84
-        for feature in results['features']:
+        for feature in out['features']:
             coords = feature['geometry']['coordinates']
             transformed_coords = self.transformer.transform(coords[0], coords[1])
             feature['geometry']['coordinates'] = [transformed_coords[0], transformed_coords[1]]
 
         # Return
-        return results
+        return out
 

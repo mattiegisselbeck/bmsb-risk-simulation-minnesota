@@ -2,7 +2,6 @@
 """RESTful API for accessing BMSB Simulation Results"""
 
 import os
-
 from flask import Flask
 from flask_restx import Api, Namespace, Resource
 
@@ -54,7 +53,7 @@ class HSIncoming(Resource):
     def get(self, top):
         # Query
         db.connect()
-        out = db.query(Query.SIMPLE_HUFF_IN, top)[0][0]
+        out = db.query(Query.HUFFMODELIN, top)[0][0]
         db.close()
 
         # Return
@@ -68,7 +67,7 @@ class HSOutgoing(Resource):
     def get(self, top):
         # Query
         db.connect()
-        out = db.query(Query.SIMPLE_HUFF_OUT, top)[0][0]
+        out = db.query(Query.HUFFMODELOUT, top)[0][0]
         db.close()
 
         # Return

@@ -2,9 +2,7 @@
 """Establishes an easy-to-use interface for working with PostgreSQL database."""
 
 from __future__ import annotations
-
 import os
-
 import psycopg2
 
 __author__ = "Luke Zaruba"

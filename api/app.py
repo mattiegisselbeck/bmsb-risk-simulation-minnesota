@@ -8,6 +8,8 @@ from db import Database, Query
 
 __status__ = "Production"
 
+
+
 # Configure API
 app = Flask(__name__)
 api = Api(
@@ -46,7 +48,7 @@ api.add_namespace(gravity_model_ns)
 class HSIncoming(Resource):
     def get(self, top):
         # Query
-        out = db.query(Query.HUFFMODELIN, top)
+        out = Database.query(Query.HUFFMODELIN, top)
 
         # Return
         return out
@@ -58,9 +60,8 @@ class HSIncoming(Resource):
 class HSOutgoing(Resource):
     def get(self, top):
         # Query
-        db.connect()
-        out = db.query(Query.HUFFMODELOUT, top)[0][0]
-        db.close()
+        Database.query()
+        out = Database.query(Query.HUFFMODELOUT, top)[0][0]
 
         # Return
         return out

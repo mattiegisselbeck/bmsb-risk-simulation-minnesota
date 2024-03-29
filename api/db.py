@@ -2,15 +2,10 @@
 """Establishes an easy-to-use interface for working with PostgreSQL database."""
 
 from __future__ import annotations
-
 import os
-
 import psycopg2
 
-__author__ = "Luke Zaruba"
-__credits__ = ["Luke Zaruba", "Mattie Gisselbeck"]
 __status__ = "Production"
-
 
 class Database:
     """
@@ -85,7 +80,7 @@ class Database:
                 # Execute Query
                 c.execute(query, (int(user_input),))
 
-                # Commit to DB
+                # Commit to Database
                 self.connection.commit()
 
                 # Return Output
@@ -112,98 +107,98 @@ class Query:
     A class used to store SQL queries.
     """
 
-    # Huff Simple Queries
-    SIMPLE_HUFF_IN = """
+    # Huff Model Queries
+    HUFFMODELIN = """
     SELECT json_build_object(
     'type', 'FeatureCollection',
     'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
         FROM (
-            SELECT *, RANK() OVER (ORDER BY incoming DESC) as rank
-            FROM final_huff
+            SELECT *, RANK() OVER (ORDER BY Incoming DESC) as rank
+            FROM huff_model
         ) as rankings
         WHERE rank <= %s;
     """
-    SIMPLE_HUFF_OUT = """
+    HUFFMODELOUT = """
         SELECT json_build_object(
         'type', 'FeatureCollection',
         'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
         FROM (
-            SELECT *, RANK() OVER (ORDER BY outgoing DESC) as rank
-            FROM final_huff
+            SELECT *, RANK() OVER (ORDER BY Outgoing DESC) as rank
+            FROM huff_model
         ) as rankings
         WHERE rank <= %s;
     """
-    SIMPLE_HUFF_RISK = """
+    HUFFMODELRISK = """
         SELECT json_build_object(
         'type', 'FeatureCollection',
         'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
         FROM (
-            SELECT *, RANK() OVER (ORDER BY risk DESC) as rank
-            FROM final_huff
-        ) as rankings
-        WHERE rank <= %s;
-    """
-
-    # Huff Decay Queries
-    DECAY_HUFF_IN = """
-        SELECT json_build_object(
-        'type', 'FeatureCollection',
-        'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
-        FROM (
-            SELECT *, RANK() OVER (ORDER BY incoming DESC) as rank
-            FROM final_huff_decay
-        ) as rankings
-        WHERE rank <= %s;
-    """
-    DECAY_HUFF_OUT = """
-        SELECT json_build_object(
-        'type', 'FeatureCollection',
-        'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
-        FROM (
-            SELECT *, RANK() OVER (ORDER BY outgoing DESC) as rank
-            FROM final_huff_decay
-        ) as rankings
-        WHERE rank <= %s;
-    """
-    DECAY_HUFF_RISK = """
-        SELECT json_build_object(
-        'type', 'FeatureCollection',
-        'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
-        FROM (
-            SELECT *, RANK() OVER (ORDER BY risk DESC) as rank
-            FROM final_huff_decay
+            SELECT *, RANK() OVER (ORDER BY Risk DESC) as rank
+            FROM huff_model
         ) as rankings
         WHERE rank <= %s;
     """
 
-    # Gravity Queries
-    GRAVITY_IN = """
+    # Huff Model with Distance Decay Queries
+    HUFFMODELDDIN = """
+        SELECT json_build_object(
+        'type', 'FeatureCollection',
+        'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
+        FROM (
+            SELECT *, RANK() OVER (ORDER BY Incoming DESC) as rank
+            FROM huff_model_distance_decay
+        ) as rankings
+        WHERE rank <= %s;
+    """
+    HUFFMODELDDOUT = """
+        SELECT json_build_object(
+        'type', 'FeatureCollection',
+        'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
+        FROM (
+            SELECT *, RANK() OVER (ORDER BY Outgoing DESC) as rank
+            FROM huff_model_distance_decay
+        ) as rankings
+        WHERE rank <= %s;
+    """
+    HUFFMODELDDRISK = """
+        SELECT json_build_object(
+        'type', 'FeatureCollection',
+        'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
+        FROM (
+            SELECT *, RANK() OVER (ORDER BY Risk DESC) as rank
+            FROM huff_model_distance_decay
+        ) as rankings
+        WHERE rank <= %s;
+    """
+
+    # Gravity Model Queries
+    GRAVITYMODELIN = """
         SELECT json_build_object(
         'type', 'FeatureCollection',
         'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
         FROM (
             SELECT *, RANK() OVER (ORDER BY incoming DESC) as rank
-            FROM final_gravity
+            FROM gravity_model
         ) as rankings
         WHERE rank <= %s;
     """
-    GRAVITY_OUT = """
+    GRAVITYMODELOUT = """
         SELECT json_build_object(
         'type', 'FeatureCollection',
         'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
         FROM (
-            SELECT *, RANK() OVER (ORDER BY outgoing DESC) as rank
-            FROM final_gravity
+            SELECT *, RANK() OVER (ORDER BY Outgoing DESC) as rank
+            FROM gravity_model
         ) as rankings
         WHERE rank <= %s;
     """
-    GRAVITY_RISK = """
+    GRAVITYMODELRISK = """
         SELECT json_build_object(
         'type', 'FeatureCollection',
         'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
         FROM (
-            SELECT *, RANK() OVER (ORDER BY risk) as rank
-            FROM final_gravity
+            SELECT *, RANK() OVER (ORDER BY Risk) as rank
+            FROM gravity_model
         ) as rankings
         WHERE rank <= %s;
     """

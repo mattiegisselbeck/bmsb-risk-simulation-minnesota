@@ -6,6 +6,8 @@ from flask import Flask
 from flask_restx import Api, Namespace, Resource
 
 from db import Database, Query
+from crs import CoordinateTransformer
+
 
 __author__ = "Luke Zaruba"
 __credits__ = ["Luke Zaruba", "Mattie Gisselbeck"]
@@ -55,9 +57,9 @@ class HSIncoming(Resource):
         db.connect()
         out = db.query(Query.HUFFMODELIN, top)[0][0]
         db.close()
-
+        results = CoordinateTransformer.transform_coordinates(out)
         # Return
-        return out
+        return results
 
 @huff_model_ns.route(
     "/outgoing/<top>",

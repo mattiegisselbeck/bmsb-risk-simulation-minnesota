@@ -64,6 +64,9 @@ class HSIncoming(Resource):
         # Call transform_coordinates method
         results = transformer.transform_coordinates(out)
 
+        # Return
+        return results
+
 @huff_model_ns.route(
     "/outgoing/<top>",
     doc={"params": {"top": "The number of top ranked results that will be returned."}},

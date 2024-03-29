@@ -126,7 +126,7 @@ class Query:
         'type', 'FeatureCollection',
         'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
         FROM (
-            SELECT *, RANK() OVER (ORDER BY Outgoing DESC) as rank
+            SELECT *, RANK() OVER (ORDER BY "Outgoing" DESC) as rank
             FROM huff_model
         ) as rankings
         WHERE rank <= %s;
@@ -136,7 +136,7 @@ class Query:
         'type', 'FeatureCollection',
         'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
         FROM (
-            SELECT *, RANK() OVER (ORDER BY Risk DESC) as rank
+            SELECT *, RANK() OVER (ORDER BY "Risk" DESC) as rank
             FROM huff_model
         ) as rankings
         WHERE rank <= %s;
@@ -148,7 +148,7 @@ class Query:
         'type', 'FeatureCollection',
         'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
         FROM (
-            SELECT *, RANK() OVER (ORDER BY Incoming DESC) as rank
+            SELECT *, RANK() OVER (ORDER BY "Incoming" DESC) as rank
             FROM huff_model_distance_decay
         ) as rankings
         WHERE rank <= %s;
@@ -158,7 +158,7 @@ class Query:
         'type', 'FeatureCollection',
         'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
         FROM (
-            SELECT *, RANK() OVER (ORDER BY Outgoing DESC) as rank
+            SELECT *, RANK() OVER (ORDER BY "Outgoing" DESC) as rank
             FROM huff_model_distance_decay
         ) as rankings
         WHERE rank <= %s;
@@ -168,7 +168,7 @@ class Query:
         'type', 'FeatureCollection',
         'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
         FROM (
-            SELECT *, RANK() OVER (ORDER BY Risk DESC) as rank
+            SELECT *, RANK() OVER (ORDER BY "Risk" DESC) as rank
             FROM huff_model_distance_decay
         ) as rankings
         WHERE rank <= %s;
@@ -180,7 +180,7 @@ class Query:
         'type', 'FeatureCollection',
         'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
         FROM (
-            SELECT *, RANK() OVER (ORDER BY incoming DESC) as rank
+            SELECT *, RANK() OVER (ORDER BY "Incoming" DESC) as rank
             FROM gravity_model
         ) as rankings
         WHERE rank <= %s;
@@ -190,7 +190,7 @@ class Query:
         'type', 'FeatureCollection',
         'features', json_agg(ST_AsGeoJSON(rankings.*)::json))
         FROM (
-            SELECT *, RANK() OVER (ORDER BY Outgoing DESC) as rank
+            SELECT *, RANK() OVER (ORDER BY "Outgoing" DESC) as rank
             FROM gravity_model
         ) as rankings
         WHERE rank <= %s;

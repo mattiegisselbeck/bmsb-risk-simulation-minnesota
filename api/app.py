@@ -58,10 +58,8 @@ class HSIncoming(Resource):
         out = db.query(Query.HUFFMODELIN, top)[0][0]
         db.close()
 
-        # Instantiate CoordinateTransformer
+        # Convert CRS
         transformer = CoordinateTransformer()
-        
-        # Call transform_coordinates method
         results = transformer.transform_coordinates(out)
 
         # Return
@@ -78,8 +76,12 @@ class HSOutgoing(Resource):
         out = db.query(Query.HUFFMODELOUT, top)[0][0]
         db.close()
 
+        # Convert CRS
+        transformer = CoordinateTransformer()
+        results = transformer.transform_coordinates(out)
+
         # Return
-        return out
+        return results
 
 
 @huff_model_ns.route(
@@ -93,8 +95,12 @@ class HSProbability(Resource):
         out = db.query(Query.HUFFMODELRISK, top)[0][0]
         db.close()
 
+       # Convert CRS
+        transformer = CoordinateTransformer()
+        results = transformer.transform_coordinates(out)
+
         # Return
-        return out
+        return results
 
 
 # Routes for Huff (Decay) Namespace
@@ -109,8 +115,12 @@ class HDIncoming(Resource):
         out = db.query(Query.HUFFMODELDDIN, top)[0][0]
         db.close()
 
+        # Convert CRS
+        transformer = CoordinateTransformer()
+        results = transformer.transform_coordinates(out)
+
         # Return
-        return out
+        return results
 
 
 @huff_model_dd_ns.route(
@@ -124,8 +134,12 @@ class HDOutgoing(Resource):
         out = db.query(Query.HUFFMODELDDOUT, top)[0][0]
         db.close()
 
+        # Convert CRS
+        transformer = CoordinateTransformer()
+        results = transformer.transform_coordinates(out)
+
         # Return
-        return out
+        return results
 
 
 @huff_model_dd_ns.route(
@@ -139,8 +153,12 @@ class HDProbability(Resource):
         out = db.query(Query.HUFFMODELDDRISK, top)[0][0]
         db.close()
 
+        # Convert CRS
+        transformer = CoordinateTransformer()
+        results = transformer.transform_coordinates(out)
+
         # Return
-        return out
+        return results
 
 
 # Routes for Gravity Namespace
@@ -155,8 +173,12 @@ class GIncoming(Resource):
         out = db.query(Query.GRAVITYMODELIN, top)[0][0]
         db.close()
 
+        # Convert CRS
+        transformer = CoordinateTransformer()
+        results = transformer.transform_coordinates(out)
+
         # Return
-        return out
+        return results
 
 
 @gravity_model_ns.route(
@@ -170,8 +192,12 @@ class GOutgoing(Resource):
         out = db.query(Query.GRAVITYMODELOUT, top)[0][0]
         db.close()
 
+        # Convert CRS
+        transformer = CoordinateTransformer()
+        results = transformer.transform_coordinates(out)
+
         # Return
-        return out
+        return results
 
 
 @gravity_model_ns.route(
@@ -185,8 +211,12 @@ class GProbability(Resource):
         out = db.query(Query.GRAVITYMODELRISK, top)[0][0]
         db.close()
 
+        # Convert CRS
+        transformer = CoordinateTransformer()
+        results = transformer.transform_coordinates(out)
+
         # Return
-        return out
+        return results
 
 
 if __name__ == "__main__":

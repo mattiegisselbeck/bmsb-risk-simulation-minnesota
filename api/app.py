@@ -8,10 +8,6 @@ from db import Database, Query
 
 __status__ = "Production"
 
-# Set up DB Connection
-db = Database.initialize_from_env()
-
-
 # Configure API
 app = Flask(__name__)
 api = Api(

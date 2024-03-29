@@ -1,27 +1,13 @@
 # -*- coding: utf-8 -*-
-"""Establishes an easy-to-use interface for working with PostgreSQL database."""
 
 from __future__ import annotations
 import os
-import psycopg2
+from sqlalchemy import create_engine
+
 
 __status__ = "Production"
 
 class Database:
-    """
-    A class used to represent a database connection.
-
-    Methods
-    -------
-    initialize_from_env()
-        Initializes a database object, based on environmental variable.
-    connect()
-        Makes connection to database.
-    query(query)
-        Executes query on database.
-    close()
-        Closes connection to database.
-    """
 
     def __init__(
         self, host: str, user: str, password: str, db_name: str, port: int
@@ -43,48 +29,17 @@ class Database:
         # Set Connection to None
         self.connection = None
 
-    @classmethod
-    def initialize_from_env(cls) -> Database:
-        """Instantiates a database connection to a PostgreSQL database using enviornmental variables."""
-        # Extract Secrets
-        host = os.environ.get("HOST")
-        user = os.environ.get("USER")
-        password = os.environ.get("PASSWORD")
-        db_name = os.environ.get("DBNAME")
-        port = os.environ.get("DBPORT")
-
-        # Return Instance
-        return cls(host, user, password, db_name, port)
-
-    def connect(self) -> None:
-        """Makes connection to database."""
-        self.connection = psycopg2.connect(
-            host=self.host,
-            database=self.db_name,
-            user=self.user,
-            password=self.password,
-            port=self.port,
-        )
-
     def query(self, query: str, user_input: int) -> str:
-        """Executes a query on a database connection. A connection should already exist.
+        engine = create_engine('postgresql://postgres:#H<8Y$Ya5RF"QKz;@35.192.156.119:5432/sandbox', echo=False)
 
-        :param str query: A SQL query that will be executed.
-        :param str user_input: User input for query.
-        :return str: The return from the SQL query.
-        """
         # Open Cursor
-        with self.connection.cursor() as c:
-            # Try to Execute
+        with engine.connect() as connection:
             try:
                 # Execute Query
-                c.execute(query, (int(user_input),))
-
-                # Commit to Database
-                self.connection.commit()
+                result = connection.execute(query, (int(user_input),))
 
                 # Return Output
-                return c.fetchall()
+                return result.fetchall()
 
             except Exception as e:
                 # Roll Back Transaction if Invalid Query
@@ -92,15 +47,6 @@ class Database:
 
                 # Display Error
                 return "Error: " + str(e)
-
-    def close(self):
-        """Closes connection to database."""
-        # Close Connection
-        self.connection.close()
-
-        # Set Connection to None
-        self.connection = None
-
 
 class Query:
     """

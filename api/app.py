@@ -50,13 +50,10 @@ api.add_namespace(gravity_model_ns)
 class HSIncoming(Resource):
     def get(self, top):
         # Query
-        db.connect()
-        out = db.query(Query.HUFFMODELIN, top)[0][0]
-        db.close()
+        out = db.query(Query.HUFFMODELIN, top)
 
         # Return
         return out
-
 
 @huff_model_ns.route(
     "/outgoing/<top>",

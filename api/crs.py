@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import pyproj
-from flask import jsonify
 
 __author__ = "Mattie Gisselbeck"
 __status__ = "Production"
@@ -22,5 +21,5 @@ class CoordinateTransformer:
             feature['geometry']['coordinates'] = [transformed_coords[0], transformed_coords[1]]
 
         # Return
-        return jsonify(results)
+        return results
 

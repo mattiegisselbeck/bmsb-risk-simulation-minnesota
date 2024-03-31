@@ -1,7 +1,7 @@
 # Brown Marmorated Stink Bug Risk Simulation and Analysis in Minnesota
 
-![Docker Cloud Automated build](https://img.shields.io/docker/cloud/build/mattiegisselbeck/bmsb-risk-simulation-minnesota/api)
-![Swagger Validator](https://img.shields.io/swagger/valid/3.0?specUrl=https://bmsb-risk-simulation-minnesota-tr6xl5mv3a-uc.a.run.app/api/v1/doc)
+![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/mattiegisselbeck/bmsb-risk-simulation-minnesota)
+![Swagger Validator](https://img.shields.io/swagger/valid/3.0?specUrl=)
 ![GitHub last commit](https://img.shields.io/github/last-commit/mattiegisselbeck/bmsb-risk-analysis-minnesota)
 
 ## Overview 
